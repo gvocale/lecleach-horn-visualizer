@@ -74,7 +74,7 @@ function App() {
   const debouncedRoundOver = useDebounce(roundOver, 300);
 
   // Derived state: Calculator and Profile Points
-  const { points, dimensions, csv, chartData, spiralData, xDomain, yDomain } =
+  const { points, dimensions, csv, chartData, xDomain, yDomain } =
     useMemo(() => {
       const calculator = new JmlcHornCalculator({
         fc: debouncedFc,
