@@ -17,7 +17,7 @@ import {
   Lock,
   Activity,
 } from "lucide-react";
-import { JmlcHornCalculator } from "./lib/jmlc";
+import { LeCleachHornCalculator } from "./lib/lecleach";
 
 // Simple debounce hook
 function useDebounce<T>(value: T, delay: number): T {
@@ -76,7 +76,7 @@ function App() {
   // Derived state: Calculator and Profile Points
   const { points, dimensions, csv, chartData, xDomain, yDomain } =
     useMemo(() => {
-      const calculator = new JmlcHornCalculator({
+      const calculator = new LeCleachHornCalculator({
         fc: debouncedFc,
         T: debouncedT,
         d0: debouncedD0,
@@ -201,8 +201,14 @@ function App() {
     const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .slice(0, 19);
     a.href = url;
-    a.download = `jmlc-fc${fc}-T${T}-d${d0}.csv`;
+    a.download = `lecleach-fc${fc}-T${T}-d${d0}-r${roundOver}-depth${dimensions.depth.toFixed(
+      1
+    )}-mouth${dimensions.mouthDiameter.toFixed(1)}-${timestamp}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -211,7 +217,7 @@ function App() {
 
   const handleDownloadLog = () => {
     // Generate the log CSV on demand since it's cheap and we have the full points array
-    const calculator = new JmlcHornCalculator({
+    const calculator = new LeCleachHornCalculator({
       fc,
       T,
       d0,
@@ -221,8 +227,14 @@ function App() {
     const blob = new Blob([logCsv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .slice(0, 19);
     a.href = url;
-    a.download = `jmlc-log-fc${fc}-T${T}-d${d0}.csv`;
+    a.download = `lecleach-log-fc${fc}-T${T}-d${d0}-r${roundOver}-depth${dimensions.depth.toFixed(
+      1
+    )}-mouth${dimensions.mouthDiameter.toFixed(1)}-${timestamp}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -237,7 +249,7 @@ function App() {
           <div className="flex items-center gap-3 mb-2">
             <Calculator className="w-8 h-8 text-blue-400" />
             <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              JMLC Horn Profile Generator
+              Le Cleac'h Horn Profile Generator
             </h1>
           </div>
 
@@ -626,7 +638,7 @@ function App() {
             <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div className="text-sm text-blue-800">
-                <p className="font-semibold mb-1">About JMLC Expansion</p>
+                <p className="font-semibold mb-1">About Le Cleac'h Expansion</p>
                 <p>
                   The Le Cléac'h expansion reduces sound coloration by using a
                   'rollback' curve to smooth the transition of sound waves into

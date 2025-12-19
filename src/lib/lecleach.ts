@@ -1,4 +1,4 @@
-export interface JmlcParams {
+export interface LeCleachParams {
   fc: number; // Cutoff frequency in Hz
   T: number; // Expansion factor (usually 0.5 to 2.0)
   d0: number; // Throat diameter in mm
@@ -18,10 +18,10 @@ export interface Point {
 
 export const C_SOUND = 343200; // Speed of sound in mm/s (dry air approx 20C)
 
-export class JmlcHornCalculator {
-  private params: JmlcParams;
+export class LeCleachHornCalculator {
+  private params: LeCleachParams;
 
-  constructor(params: JmlcParams) {
+  constructor(params: LeCleachParams) {
     this.params = params;
   }
 
